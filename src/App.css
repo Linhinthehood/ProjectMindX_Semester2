@@ -1,0 +1,60 @@
+:root {
+    --primary-color: #000000; /* Black */
+    --secondary-color: #D4AF37; /* Gold */
+    --background-color: #1C1C1C; /* Dark Gray */
+    --text-color: #E0E0E0; /* Light Gray */
+    --accent-color: #FFFFFF; /* White */
+}
+
+/* Global styles */
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+}
+
+Header, Footer {
+    background-color: var(--primary-color);
+    color: var(--accent-color);
+}
+
+a {
+    color: var(--secondary-color);
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--accent-color);
+}
+
+button {
+    box-sizing: border-box;
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease; /* Smooth transitions */
+}
+
+button:hover {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    border: 1px solid var(--secondary-color);
+}
+
+/* Section styles */
+.container {
+    padding: 20px;
+}
+
+.card {
+    background-color: var(--primary-color);
+    color: var(--accent-color);
+    border: 1px solid var(--secondary-color);
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+}

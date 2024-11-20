@@ -1,6 +1,7 @@
 import React from 'react';
-import CarItem from './CarItems';
-const CarList = ({ cars }) => {
+import CarItem from './CarItem';
+
+const CarList = ({ cars, onEditCar }) => {
     if (!cars || cars.length === 0) {
         // Hiển thị thông báo nếu không có xe
         return <p className="text-center">No cars available</p>;
@@ -8,10 +9,10 @@ const CarList = ({ cars }) => {
 
     return (
         <div>
-            <h2 className="text-center my-4">Car List</h2>
+            <h2 className="text-center my-4">Your cars</h2>
             <div className="row">
                 {cars.map((car, index) => (
-                    <CarItem key={index} car={car} />
+                    <CarItem key={index} car={car} onEditCar={onEditCar}/>
                 ))}
             </div>
         </div>

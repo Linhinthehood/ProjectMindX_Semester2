@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+
 const LoginForm = ({ onLoginSuccess }) => {
-    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
     const [messageColor, setMessageColor] = useState('');
@@ -10,11 +11,6 @@ const LoginForm = ({ onLoginSuccess }) => {
     const handleLogin = async (e) => {
         e.preventDefault();
 
-        if (!email || !password) {
-            setMessage("Please enter both email and password");
-            setMessageColor("danger");
-            return;
-        }
 
         try {
             // Lấy dữ liệu từ MockAPI
@@ -23,7 +19,7 @@ const LoginForm = ({ onLoginSuccess }) => {
 
             // Tìm trong danh sách Customer
             const customer = customerResponse.data.find(
-                (user) => user.Email === email && user.Password === password
+                (user) => user.Username === username && user.Password === password
             );
 
             if (customer) {
@@ -37,7 +33,7 @@ const LoginForm = ({ onLoginSuccess }) => {
 
             // Tìm trong danh sách CarProvider
             const provider = providerResponse.data.find(
-                (user) => user.Email === email && user.Password === password
+                (user) => user.Username === username && user.Password === password
             );
 
             if (provider) {
@@ -49,7 +45,7 @@ const LoginForm = ({ onLoginSuccess }) => {
                 return;
             }
 
-            setMessage("Invalid email or password");
+            setMessage("Invalid username or password");
             setMessageColor("danger");
         } catch (error) {
             console.error("Error during login:", error);
@@ -59,7 +55,7 @@ const LoginForm = ({ onLoginSuccess }) => {
     };
 
     return (
-        <div className="d-flex justify-content-center align-items-center bg-light">
+        <div className="d-flex justify-content-center align-items-center">
             <div className="mb-4 mt-4 card p-4" style={{ maxWidth: '400px', width: '100%' }}>
                 <h2 className="text-center mb-4">Login</h2>
                 {message && (
@@ -67,12 +63,12 @@ const LoginForm = ({ onLoginSuccess }) => {
                 )}
                 <form onSubmit={handleLogin}>
                     <div className="form-group">
-                        <label>Email:</label>
+                        <label>Username:</label>
                         <input
-                            type="email"
+                            type="text"
                             className="form-control"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
                             required
                         />
                     </div>
@@ -86,7 +82,7 @@ const LoginForm = ({ onLoginSuccess }) => {
                             required
                         />
                     </div>
-                    <button type="submit" className="btn btn-primary btn-block mt-3">Login</button>
+                    <button type="submit" className="var(--secondary-color) btn-block mt-3">Login</button>
                 </form>
             </div>
         </div>

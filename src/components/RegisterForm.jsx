@@ -52,7 +52,7 @@ const RegisterForm = () => {
     };
 
     return (
-        <div className="d-flex justify-content-center align-items-center bg-light">
+        <div className="d-flex justify-content-center align-items-center">
             <div className="card p-4 mt-4 mb-4" style={{ maxWidth: '400px', width: '100%' }}>
                 <h2 className="text-center mb-4">Register</h2>
                 {message && <p className={`text-${message.includes('successful') ? 'primary' : 'danger'} text-center`}>{message}</p>}
@@ -108,7 +108,7 @@ const RegisterForm = () => {
                             <option value="provider">Car Provider</option>
                         </select>
                     </div>
-                    <button type="submit" className="btn btn-primary btn-block mt-3">Register</button>
+                    <button type="submit" className="var(--secondary-color) btn-block mt-3">Register</button>
                 </form>
             </div>
         </div>

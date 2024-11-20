@@ -1,7 +1,7 @@
 import React from 'react';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import CarProviderDashboard from '../components/CarProvider/CarProviderDashboard';
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
+import CarProviderDashboard from '../../components/CarProvider/CarProviderDashboard';
 
 const CarProviderMainPage = () => {
   return (

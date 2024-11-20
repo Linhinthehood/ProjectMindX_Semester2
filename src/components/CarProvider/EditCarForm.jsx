@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const AddCarForm = ({ onCarAdded }) => {
+const EditCarForm = ({ selectedCar, onCarUpdated, onCarDeleted }) => {
     const [carData, setCarData] = useState({
         CarName: '',
         CarType: '',
@@ -13,83 +13,84 @@ const AddCarForm = ({ onCarAdded }) => {
         Color: ''
     });
 
+    // Load dữ liệu của xe được chọn
+    useEffect(() => {
+        console.log("Selected Car in EditCarForm:", selectedCar);
+        if (selectedCar) {
+            setCarData(selectedCar);
+        }
+    }, [selectedCar]);
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setCarData({ ...carData, [name]: value });
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const handleSave = async () => {
+        try {
+            const carProviderID = localStorage.getItem("CarProviderID");
+            const response = await axios.get(`https://67397cbaa3a36b5a62eec16d.mockapi.io/CarProvider/${carProviderID}`);
+            const carProvider = response.data;
+
+            const updatedCarList = carProvider.Car.map((car) =>
+                car.CarName === selectedCar.CarName ? carData : car
+            );
+
+            await axios.put(`https://67397cbaa3a36b5a62eec16d.mockapi.io/CarProvider/${carProviderID}`, {
+                ...carProvider,
+                Car: updatedCarList
+            });
+
+            onCarUpdated(updatedCarList);
+            alert('Car information updated successfully!');
+        } catch (error) {
+            console.error("Error saving car data:", error);
+            alert('Failed to save car data. Please try again.');
+        }
+    };
+
+    const handleDelete = async () => {
+        const confirmDelete = window.confirm("Bạn có chắc chắn xoá thông tin xe này hay không?");
+        if (!confirmDelete) return;
 
         try {
             const carProviderID = localStorage.getItem("CarProviderID");
             const response = await axios.get(`https://67397cbaa3a36b5a62eec16d.mockapi.io/CarProvider/${carProviderID}`);
             const carProvider = response.data;
 
-            if (carProvider && carProvider.Car) {
-                const updatedCarList = [...carProvider.Car, { ...carData, DateAdd: new Date().toLocaleDateString('en-GB') }];
+            const updatedCarList = carProvider.Car.filter(
+                (car) => car.CarName !== selectedCar.CarName
+            );
 
-                await axios.put(`https://67397cbaa3a36b5a62eec16d.mockapi.io/CarProvider/${carProviderID}`, {
-                    ...carProvider,
-                    Car: updatedCarList
-                });
+            await axios.put(`https://67397cbaa3a36b5a62eec16d.mockapi.io/CarProvider/${carProviderID}`, {
+                ...carProvider,
+                Car: updatedCarList
+            });
 
-                setCarData({
-                    CarName: '',
-                    CarType: '',
-                    PricePerDay: '',
-                    Availability: true,
-                    Description: '',
-                    Image: '',
-                    DateAdd: '',
-                    Color: ''
-                });
-
-                if (onCarAdded) {
-                    onCarAdded(updatedCarList); // Cập nhật danh sách xe ở cấp cha
-                }
-
-                alert('Car added successfully!');
-            } else {
-                alert('Car Provider data not found!');
-            }
+            onCarDeleted(updatedCarList);
+            alert('Car deleted successfully!');
         } catch (error) {
-            console.error('Error adding car:', error);
-            alert('Failed to add car. Please try again.');
+            console.error("Error deleting car:", error);
+            alert('Failed to delete car. Please try again.');
         }
     };
 
+    if (!selectedCar) return null; // Không hiển thị gì nếu chưa có xe được chọn
+
     return (
         <>
-            {/* Nút mở modal */}
-            <button
-                type="button"
-                className="var(--secondary-color) mb-3"
-                data-bs-toggle="modal"
-                data-bs-target="#addCarModal"
-            >
-                Add New Car
-            </button>
-
             {/* Modal */}
             <div
-                className="modal fade "
-                id="addCarModal"
-                tabIndex="-1"
-                aria-labelledby="addCarModalLabel"
-                aria-hidden="true"
+                className="modal fade show"
+                style={{ display: 'block', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
             >
-                <div className="modal-dialog ">
-                    <div
-                        className="modal-content var(--background-color) "
-                        style={{ backgroundColor: 'var(--background-color)' }}
-                    >
+                <div className="modal-dialog">
+                    <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title" id="addCarModalLabel">Add a New Car</h5>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <h5 className="modal-title">Edit Car: {carData.CarName}</h5>
                         </div>
                         <div className="modal-body">
-                            <form onSubmit={handleSubmit}>
+                            <form>
                                 <div className="form-group">
                                     <label>Car Name</label>
                                     <input
@@ -98,7 +99,7 @@ const AddCarForm = ({ onCarAdded }) => {
                                         value={carData.CarName}
                                         onChange={handleChange}
                                         className="form-control"
-                                        required
+                                        disabled // Không cho phép đổi tên xe
                                     />
                                 </div>
                                 <div className="form-group">
@@ -109,7 +110,6 @@ const AddCarForm = ({ onCarAdded }) => {
                                         value={carData.CarType}
                                         onChange={handleChange}
                                         className="form-control"
-                                        required
                                     />
                                 </div>
                                 <div className="form-group">
@@ -120,7 +120,6 @@ const AddCarForm = ({ onCarAdded }) => {
                                         value={carData.PricePerDay}
                                         onChange={handleChange}
                                         className="form-control"
-                                        required
                                     />
                                 </div>
                                 <div className="form-group">
@@ -128,7 +127,9 @@ const AddCarForm = ({ onCarAdded }) => {
                                     <select
                                         name="Availability"
                                         value={carData.Availability}
-                                        onChange={(e) => setCarData({ ...carData, Availability: e.target.value === 'true' })}
+                                        onChange={(e) =>
+                                            setCarData({ ...carData, Availability: e.target.value === 'true' })
+                                        }
                                         className="form-control"
                                     >
                                         <option value="true">Available</option>
@@ -143,7 +144,6 @@ const AddCarForm = ({ onCarAdded }) => {
                                         value={carData.Color}
                                         onChange={handleChange}
                                         className="form-control"
-                                        required
                                     />
                                 </div>
                                 <div className="form-group">
@@ -154,7 +154,6 @@ const AddCarForm = ({ onCarAdded }) => {
                                         value={carData.Image}
                                         onChange={handleChange}
                                         className="form-control"
-                                        required
                                     />
                                 </div>
                                 <div className="form-group">
@@ -164,11 +163,17 @@ const AddCarForm = ({ onCarAdded }) => {
                                         value={carData.Description}
                                         onChange={handleChange}
                                         className="form-control"
-                                        required
                                     />
                                 </div>
-                                <button type="submit" className="var(--secondary-color) mt-3">Add Car</button>
                             </form>
+                        </div>
+                        <div className="modal-footer">
+                            <button className="btn btn-success" onClick={handleSave}>
+                                Save
+                            </button>
+                            <button className="btn btn-danger" onClick={handleDelete}>
+                                Delete
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -177,4 +182,4 @@ const AddCarForm = ({ onCarAdded }) => {
     );
 };
 
-export default AddCarForm;
+export default EditCarForm;
