@@ -6,6 +6,7 @@
 .btn-custom-secondary {
     background-color: var(--primary-color);
     color: var(--accent-color);
+    
 }
 
 .btn-custom-primary:hover {

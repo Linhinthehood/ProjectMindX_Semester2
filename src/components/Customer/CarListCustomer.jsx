@@ -1,40 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
 import CarItemCustomer from './CarItemCustomer';
 
-const CarListCustomer = () => {
-    const [cars, setCars] = useState([]); // Danh sách tất cả các xe
-    const [loading, setLoading] = useState(true); // Trạng thái tải dữ liệu
-    const [error, setError] = useState(null); // Lỗi nếu có
+const CarListCustomer = ({ cars }) => {
+    const [currentPage, setCurrentPage] = useState(1); // Current page
+    const itemsPerPage = 6; // Số item trên mỗi trang
 
-    useEffect(() => {
-        const fetchCars = async () => {
-            try {
-                // Gửi yêu cầu lấy danh sách tất cả CarProvider
-                const response = await axios.get('https://67397cbaa3a36b5a62eec16d.mockapi.io/CarProvider');
-                const providers = response.data;
+    // Tính toán danh sách xe hiển thị theo trang hiện tại
+    const totalPages = Math.ceil(cars.length / itemsPerPage); // Tổng số trang
+    const currentCars = cars.slice(
+        (currentPage - 1) * itemsPerPage, // Bắt đầu từ index
+        currentPage * itemsPerPage // Kết thúc tại index
+    );
 
-                // Gộp tất cả danh sách xe từ các CarProvider
-                const allCars = providers.flatMap(provider => provider.Car || []);
-                setCars(allCars); // Lưu danh sách xe
-                setLoading(false);
-            } catch (err) {
-                console.error("Error fetching cars:", err);
-                setError("Failed to load cars. Please try again.");
-                setLoading(false);
-            }
-        };
-
-        fetchCars();
-    }, []);
-
-    if (loading) {
-        return <p className="text-center">Loading cars...</p>;
-    }
-
-    if (error) {
-        return <p className="text-center text-danger">{error}</p>;
-    }
+    const handlePageChange = (page) => {
+        setCurrentPage(page); // Cập nhật trang hiện tại
+    };
 
     if (cars.length === 0) {
         return <p className="text-center">No cars available at the moment.</p>;
@@ -43,11 +23,25 @@ const CarListCustomer = () => {
     return (
         <div>
             <h2 className="text-center my-4">Available Cars</h2>
-            <div className="row">
-                {cars.map((car, index) => (
+            <div className="row row-cols-1 row-cols-md-2 g-4">
+                {currentCars.map((car, index) => (
                     <CarItemCustomer key={index} car={car} />
                 ))}
             </div>
+            {/* Pagination */}
+            <nav className="mt-4">
+                <ul className="pagination justify-content-center">
+                    {[...Array(totalPages)].map((_, index) => (
+                        <li
+                            key={index}
+                            className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}
+                            onClick={() => handlePageChange(index + 1)}
+                        >
+                            <button className="page-link">{index + 1}</button>
+                        </li>
+                    ))}
+                </ul>
+            </nav>
         </div>
     );
 };

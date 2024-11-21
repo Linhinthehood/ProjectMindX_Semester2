@@ -9,7 +9,7 @@ const CarList = ({ cars, onEditCar }) => {
 
     return (
         <div>
-            <h2 className="text-center my-4">Your cars</h2>
+            <h2 className="text-center my-4">________________ Your cars ________________</h2>
             <div className="row">
                 {cars.map((car, index) => (
                     <CarItem key={index} car={car} onEditCar={onEditCar}/>

@@ -6,7 +6,7 @@ const SearchCar = ({ onFilterChange }) => {
         year: [],
         brand: '',
         fuelType: '',
-        priceRange: [0, 1000],
+        priceRange: [0, 300],
         passengerCapacity: '',
         color: '',
     });
@@ -23,14 +23,11 @@ const SearchCar = ({ onFilterChange }) => {
         } else {
             setFilters({ ...filters, [name]: value });
         }
-
-        onFilterChange({ ...filters, [name]: value }); // Notify parent component
     };
 
     const handlePriceChange = (e) => {
         const price = parseInt(e.target.value, 10);
         setFilters({ ...filters, priceRange: [0, price] });
-        onFilterChange({ ...filters, priceRange: [0, price] });
     };
 
     const handleReset = () => {
@@ -39,16 +36,20 @@ const SearchCar = ({ onFilterChange }) => {
             year: [],
             brand: '',
             fuelType: '',
-            priceRange: [0, 1000],
+            priceRange: [0, 300],
             passengerCapacity: '',
             color: '',
         };
         setFilters(resetFilters);
-        onFilterChange(resetFilters);
+        onFilterChange(resetFilters); // Gửi filters mặc định
+    };
+
+    const handleFilterSubmit = () => {
+        onFilterChange(filters); // Gửi filters hiện tại tới component cha
     };
 
     return (
-        <div className="card p-4 bg-dark text-white" style={{ width: '300px' }}>
+        <div className="card mt-5 p-4 bg-dark text-white" style={{ width: '700px', height: 'max-content' }}>
             <h4 className="mb-3">Filter</h4>
             {/* Search Bar */}
             <div className="mb-3">
@@ -73,7 +74,6 @@ const SearchCar = ({ onFilterChange }) => {
                             value={year}
                             checked={filters.year.includes(`${year}`)}
                             onChange={handleFilterChange}
-                            className=''
                         />
                         <label htmlFor={`year-${year}`}> {year}</label>
                     </div>
@@ -90,20 +90,6 @@ const SearchCar = ({ onFilterChange }) => {
                     value={filters.brand}
                     onChange={handleFilterChange}
                 />
-                <div className="mt-2">
-                    {['Toyota', 'BMW', 'Chevrolet', 'Ford'].map((brand) => (
-                        <div key={brand}>
-                            <input
-                                type="checkbox"
-                                id={`brand-${brand}`}
-                                name="brand"
-                                value={brand}
-                                onChange={handleFilterChange}
-                            />
-                            <label htmlFor={`brand-${brand}`}> {brand}</label>
-                        </div>
-                    ))}
-                </div>
             </div>
             {/* Fuel Type */}
             <div className="mb-3">
@@ -153,7 +139,7 @@ const SearchCar = ({ onFilterChange }) => {
                     type="range"
                     className="form-range"
                     min="0"
-                    max="1000"
+                    max="300"
                     value={filters.priceRange[1]}
                     onChange={handlePriceChange}
                 />
@@ -161,14 +147,23 @@ const SearchCar = ({ onFilterChange }) => {
                     ${filters.priceRange[0]} - ${filters.priceRange[1]}
                 </p>
             </div>
-            {/* Reset Filters */}
-            <button
-                type="button"
-                className="btn btn-outline-light"
-                onClick={handleReset}
-            >
-                Reset Filter
-            </button>
+            {/* Buttons */}
+            <div className="d-flex gap-3 flex-direction-column">
+                <button
+                    type="button"
+                    className="btn btn-outline-light"
+                    onClick={handleReset}
+                >
+                    Reset Filter
+                </button>
+                <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={handleFilterSubmit}
+                >
+                    Apply Filter
+                </button>
+            </div>
         </div>
     );
 };
