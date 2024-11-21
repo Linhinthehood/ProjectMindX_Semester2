@@ -39,8 +39,8 @@ const CustomerDashboard = () => {
     return (
         <div className='container'>
             <h1 className='my-4'>Welcome back, {username}</h1>
-            <div className='d-flex flex-direction-row'>
-                <SearchCar/>
+            <div className='d-flex flex-direction-row gap-3'>
+                <SearchCar  />
                 <CarListCustomer />
             </div>
         </div>

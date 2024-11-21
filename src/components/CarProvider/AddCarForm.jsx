@@ -10,7 +10,12 @@ const AddCarForm = ({ onCarAdded }) => {
         Description: '',
         Image: '',
         DateAdd: '',
-        Color: ''
+        Color: '',
+        Year: '',               
+        Brand: '',               
+        Location: '',            
+        FuelType: 'Petrol',      
+        PassengerCapacity: ''    
     });
 
     const handleChange = (e) => {
@@ -162,6 +167,67 @@ const AddCarForm = ({ onCarAdded }) => {
                                     <textarea
                                         name="Description"
                                         value={carData.Description}
+                                        onChange={handleChange}
+                                        className="form-control"
+                                        required
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label>Year</label>
+                                    <input
+                                        type="number"
+                                        name="Year"
+                                        value={carData.Year}
+                                        onChange={handleChange}
+                                        className="form-control"
+                                        required
+                                    />
+                                </div>
+
+                                <div className="form-group">
+                                    <label>Brand</label>
+                                    <input
+                                        type="text"
+                                        name="Brand"
+                                        value={carData.Brand}
+                                        onChange={handleChange}
+                                        className="form-control"
+                                        required
+                                    />
+                                </div>
+
+                                <div className="form-group">
+                                    <label>Location</label>
+                                    <input
+                                        type="text"
+                                        name="Location"
+                                        value={carData.Location}
+                                        onChange={handleChange}
+                                        className="form-control"
+                                        required
+                                    />
+                                </div>
+
+                                <div className="form-group">
+                                    <label>Fuel Type</label>
+                                    <select
+                                        name="FuelType"
+                                        value={carData.FuelType}
+                                        onChange={handleChange}
+                                        className="form-control"
+                                    >
+                                        <option value="Petrol">Petrol</option>
+                                        <option value="Diesel">Diesel</option>
+                                        <option value="Electric">Electric</option>
+                                    </select>
+                                </div>
+
+                                <div className="form-group">
+                                    <label>Passenger Capacity</label>
+                                    <input
+                                        type="number"
+                                        name="PassengerCapacity"
+                                        value={carData.PassengerCapacity}
                                         onChange={handleChange}
                                         className="form-control"
                                         required

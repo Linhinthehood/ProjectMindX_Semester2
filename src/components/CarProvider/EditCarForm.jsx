@@ -10,7 +10,12 @@ const EditCarForm = ({ selectedCar, onCarUpdated, onCarDeleted }) => {
         Description: '',
         Image: '',
         DateAdd: '',
-        Color: ''
+        Color: '',
+        Year: '',
+        Brand: '',
+        Location: '',
+        FuelType: 'Petrol',
+        PassengerCapacity: ''
     });
 
     // Load dữ liệu của xe được chọn
@@ -142,6 +147,59 @@ const EditCarForm = ({ selectedCar, onCarUpdated, onCarDeleted }) => {
                                         type="text"
                                         name="Color"
                                         value={carData.Color}
+                                        onChange={handleChange}
+                                        className="form-control"
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label>Year</label>
+                                    <input
+                                        type="number"
+                                        name="Year"
+                                        value={carData.Year}
+                                        onChange={handleChange}
+                                        className="form-control"
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label>Brand</label>
+                                    <input
+                                        type="text"
+                                        name="Brand"
+                                        value={carData.Brand}
+                                        onChange={handleChange}
+                                        className="form-control"
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label>Location</label>
+                                    <input
+                                        type="text"
+                                        name="Location"
+                                        value={carData.Location}
+                                        onChange={handleChange}
+                                        className="form-control"
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label>Fuel Type</label>
+                                    <select
+                                        name="FuelType"
+                                        value={carData.FuelType}
+                                        onChange={handleChange}
+                                        className="form-control"
+                                    >
+                                        <option value="Petrol">Petrol</option>
+                                        <option value="Diesel">Diesel</option>
+                                        <option value="Electric">Electric</option>
+                                    </select>
+                                </div>
+                                <div className="form-group">
+                                    <label>Passenger Capacity</label>
+                                    <input
+                                        type="number"
+                                        name="PassengerCapacity"
+                                        value={carData.PassengerCapacity}
                                         onChange={handleChange}
                                         className="form-control"
                                     />
