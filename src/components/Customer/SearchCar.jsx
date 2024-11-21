@@ -148,7 +148,7 @@ const SearchCar = ({ onFilterChange }) => {
                 </p>
             </div>
             {/* Buttons */}
-            <div className="d-flex gap-3 flex-direction-column">
+            <div className="d-flex gap-3 flex-column">
                 <button
                     type="button"
                     className="btn btn-outline-light"
@@ -158,7 +158,7 @@ const SearchCar = ({ onFilterChange }) => {
                 </button>
                 <button
                     type="button"
-                    className="btn btn-primary"
+                    className="var(--secondary-color)"
                     onClick={handleFilterSubmit}
                 >
                     Apply Filter

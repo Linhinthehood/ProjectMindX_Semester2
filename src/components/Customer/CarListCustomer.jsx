@@ -37,7 +37,7 @@ const CarListCustomer = ({ cars }) => {
                             className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}
                             onClick={() => handlePageChange(index + 1)}
                         >
-                            <button className="page-link">{index + 1}</button>
+                            <button className=" m-1">{index + 1}</button>
                         </li>
                     ))}
                 </ul>
