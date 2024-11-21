@@ -1,12 +1,12 @@
 import React from 'react';
-import Header from '../../components/Header';
+import CarProviderHeader from '../../components/CarProvider/CarProviderHeader';
 import Footer from '../../components/Footer';
 import CarProviderDashboard from '../../components/CarProvider/CarProviderDashboard';
 
 const CarProviderMainPage = () => {
   return (
     <div>
-        <Header/>
+        <CarProviderHeader/>
         <CarProviderDashboard/>
         <Footer/>
     </div>
