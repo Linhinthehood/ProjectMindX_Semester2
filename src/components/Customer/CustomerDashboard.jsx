@@ -94,10 +94,10 @@ const CustomerDashboard = () => {
         <div className="container">
             <h1 className="my-4">Welcome back, {username}</h1>
             <div className="d-flex gap-3 align-items-start">
-            <div style={{ flexShrink: 0, width: '300px' }}>
+            <div className="search-car-container" style={{ flexShrink: 0, width: '300px', minWidth: '300px' }}>
                 <SearchCar onFilterChange={handleFilterChange} />
             </div>
-            <div>
+            <div className="flex-grow-1">
                 <CarListCustomer cars={filteredCars} />
                 <ShowCarRent/>
             </div>          

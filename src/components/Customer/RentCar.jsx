@@ -14,9 +14,8 @@ const RentCar = ({ car, onClose, updateCars }) => {
         const confirmation = `Are you sure you want to rent ${car.CarName} from ${rentStartDay} to ${rentEndDay}?`;
         if (window.confirm(confirmation)) {
             try {
-                // Update car Availability to false in MockAPI
                 const updatedCar = { ...car, Availability: false };
-                const carProviderID = car.ProviderID; // Assume we pass ProviderID to identify the provider
+                const carProviderID = car.ProviderID; 
                 const response = await axios.put(
                     `https://67397cbaa3a36b5a62eec16d.mockapi.io/CarProvider/${carProviderID}`,
                     { ...updatedCar }
