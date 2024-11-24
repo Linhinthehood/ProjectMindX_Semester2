@@ -1,22 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState} from 'react';
 import CarItemCustomer from './CarItemCustomer';
 
 const CarListCustomer = ({ cars }) => {
-    const [currentPage, setCurrentPage] = useState(1); // Current page
-    const itemsPerPage = 6; // Số item trên mỗi trang
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 6;
 
-    // Tính toán danh sách xe hiển thị theo trang hiện tại
-    const totalPages = Math.ceil(cars.length / itemsPerPage); // Tổng số trang
-    const currentCars = cars.slice(
-        (currentPage - 1) * itemsPerPage, // Bắt đầu từ index
-        currentPage * itemsPerPage // Kết thúc tại index
+   
+    // Lọc chỉ những xe có availability là true
+    const availableCars = cars.filter(car => car.Availability === true);
+
+
+    // Set số trang cho Car List
+    const totalPages = Math.ceil(availableCars.length / itemsPerPage);
+    const currentCars = availableCars.slice(
+        (currentPage - 1) * itemsPerPage,
+        currentPage * itemsPerPage
     );
 
     const handlePageChange = (page) => {
-        setCurrentPage(page); // Cập nhật trang hiện tại
+        setCurrentPage(page);
     };
 
-    if (cars.length === 0) {
+    if (!availableCars.length) {
         return <p className="text-center">No cars available at the moment.</p>;
     }
 
@@ -28,7 +33,6 @@ const CarListCustomer = ({ cars }) => {
                     <CarItemCustomer key={index} car={car} />
                 ))}
             </div>
-            {/* Pagination */}
             <nav className="mt-4">
                 <ul className="pagination justify-content-center">
                     {[...Array(totalPages)].map((_, index) => (
@@ -37,7 +41,7 @@ const CarListCustomer = ({ cars }) => {
                             className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}
                             onClick={() => handlePageChange(index + 1)}
                         >
-                            <button className=" m-1">{index + 1}</button>
+                            <button className="m-1">{index + 1}</button>
                         </li>
                     ))}
                 </ul>

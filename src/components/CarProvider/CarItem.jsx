@@ -12,7 +12,7 @@ const CarItem = ({ car, onEditCar }) => {
             {/* Car Card */}
             <div className="col-md-4 mb-4">
                 <div className="card" onClick={handleEdit} style={{ cursor: 'pointer' }}>
-                    <img src={Image} className="card-img-top" alt={CarName} />
+                    <img src={Image} className="card-img-top fixed-image" alt={CarName} />
                     <div className="card-body">
                         <h5 className="card-title">{CarName}</h5>
                         <p className="card-text">Type: {CarType}</p>

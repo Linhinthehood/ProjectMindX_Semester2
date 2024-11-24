@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import CarListCustomer from './CarListCustomer';
 import SearchCar from './SearchCar';
+import ShowCarRent from './ShowCarRent';
 
 const CustomerDashboard = () => {
     const [username, setUsername] = useState('');
@@ -92,9 +93,14 @@ const CustomerDashboard = () => {
     return (
         <div className="container">
             <h1 className="my-4">Welcome back, {username}</h1>
-            <div className="d-flex flex-direction-row gap-3">
+            <div className="d-flex gap-3 align-items-start">
+            <div style={{ flexShrink: 0, width: '300px' }}>
                 <SearchCar onFilterChange={handleFilterChange} />
-                <CarListCustomer cars={filteredCars} />            
+            </div>
+            <div>
+                <CarListCustomer cars={filteredCars} />
+                <ShowCarRent/>
+            </div>          
             </div>
         </div>
     );

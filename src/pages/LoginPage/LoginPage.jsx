@@ -20,7 +20,7 @@ const LoginPage = () => {
     };
 
     return (
-        <>
+        <div className=''>
             <Header />
             <div className="container my-4">
                 <div className="text-center d-flex justify-content-center gap-3">
@@ -49,7 +49,7 @@ const LoginPage = () => {
                 )}
             </div>
             <Footer />
-        </>
+        </div>
     );
 };
 

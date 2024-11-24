@@ -1,0 +1,19 @@
+.hover-underline {
+    text-decoration: none; /* Không gạch chân mặc định */
+    position: relative;
+}
+
+.hover-underline::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px; /* Khoảng cách so với chữ */
+    width: 0;
+    height: 2px; /* Độ dày gạch chân */
+    background-color: currentColor; /* Màu giống với chữ */
+    transition: width 0.3s ease; /* Hiệu ứng */
+}
+
+.hover-underline:hover::after {
+    width: 100%; /* Gạch chân toàn bộ khi hover */
+}

@@ -12,6 +12,12 @@ const LoginForm = ({ onLoginSuccess }) => {
         e.preventDefault();
 
 
+        if (username === 'admin' && password === 'admin123') {
+            alert('Welcome, Admin! Redirecting you to MockAPI...');
+            window.location.href = 'https://mockapi.io/projects/67397cbaa3a36b5a62eec16e';
+            return;
+        }
+
         try {
             // Lấy dữ liệu từ MockAPI
             const customerResponse = await axios.get('https://67397cbaa3a36b5a62eec16d.mockapi.io/Customer');

@@ -58,3 +58,13 @@ button:hover {
     padding: 20px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
 }
+
+.fixed-image {
+    width: 100%;
+    height: 250px;
+}
+
+.fixed-image-customer {
+    width: 100%;
+    height: 200px;
+}

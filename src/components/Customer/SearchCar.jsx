@@ -49,7 +49,7 @@ const SearchCar = ({ onFilterChange }) => {
     };
 
     return (
-        <div className="card mt-5 p-4 bg-dark text-white" style={{ width: '700px', height: 'max-content' }}>
+        <div className="card mt-5 p-4 bg-dark text-white" style={{ width: '250px', height: 'max-content' }}>
             <h4 className="mb-3">Filter</h4>
             {/* Search Bar */}
             <div className="mb-3">
@@ -65,19 +65,42 @@ const SearchCar = ({ onFilterChange }) => {
             {/* Year */}
             <div className="mb-3">
                 <h5>Year</h5>
-                {[2016, 2017, 2018, 2019].map((year) => (
-                    <div key={year}>
-                        <input
-                            type="checkbox"
-                            id={`year-${year}`}
-                            name="year"
-                            value={year}
-                            checked={filters.year.includes(`${year}`)}
-                            onChange={handleFilterChange}
-                        />
-                        <label htmlFor={`year-${year}`}> {year}</label>
+
+                <div className="d-flex gap-3">
+                    {/* Column for 2017 to 2020 */}
+                    <div className="d-flex flex-column">
+                        {[2017, 2018, 2019, 2020].map((year) => (
+                            <div className="d-flex align-items-center gap-2" key={year}>
+                                <input
+                                    type="checkbox"
+                                    id={`year-${year}`}
+                                    name="year"
+                                    value={year}
+                                    checked={filters.year.includes(`${year}`)}
+                                    onChange={handleFilterChange}
+                                />
+                                <label htmlFor={`year-${year}`}>{year}</label>
+                            </div>
+                        ))}
                     </div>
-                ))}
+                    {/* Column for 2021 to 2024 */}
+                    <div className="d-flex flex-column">
+                        {[2021, 2022, 2023, 2024].map((year) => (
+                            <div className="d-flex align-items-center gap-2" key={year}>
+                                <input
+                                    type="checkbox"
+                                    id={`year-${year}`}
+                                    name="year"
+                                    value={year}
+                                    checked={filters.year.includes(`${year}`)}
+                                    onChange={handleFilterChange}
+                                />
+                                <label htmlFor={`year-${year}`}>{year}</label>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
             </div>
             {/* Brand */}
             <div className="mb-3">
@@ -92,10 +115,10 @@ const SearchCar = ({ onFilterChange }) => {
                 />
             </div>
             {/* Fuel Type */}
-            <div className="mb-3">
+            <div className="mb-3 gap-3">
                 <h5>Fuel Type</h5>
                 {['Petrol', 'Diesel', 'Electric'].map((type) => (
-                    <div key={type}>
+                    <div className='d-flex gap-3' key={type}>
                         <input
                             type="radio"
                             id={`fuel-${type}`}
